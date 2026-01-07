@@ -1,9 +1,9 @@
-package chapter3.examples
+package chapter4.examples
 
 import cats._
 import cats.implicits._
-
 import helpers.Utils._
+
 import scala.util.chaining._
 
 object CatsMonads {
