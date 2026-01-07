@@ -1,6 +1,6 @@
-import chapter3.examples.CatsMonads
+import chapter4.examples.MonadError
 
 
 class Main extends App {
-  CatsMonads()
+  MonadError()
 }
