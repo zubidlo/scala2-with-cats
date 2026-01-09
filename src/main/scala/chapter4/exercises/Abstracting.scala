@@ -1,11 +1,9 @@
 package chapter4.exercises
 
-import helpers.Utils._
-
+import implicits._
 import cats._
 import cats.implicits._
 
-import scala.util.chaining._
 import scala.util.Try
 
 object Abstracting {
@@ -14,10 +12,10 @@ object Abstracting {
     else new IllegalArgumentException("Age must be greater than or equal to 18").raiseError[F, Int]
 
   def apply(): Unit = {
-    "Abstracting" pipe printThis(Console.BLUE)
+    "Abstracting".tapPrint(Console.BLUE)
 
-    validateAdult[Try](19) tap printThis()
-    validateAdult[Try](8) tap printThis(Console.RED)
+    validateAdult[Try](19).tapPrint()
+    validateAdult[Try](8).tapPrint(Console.RED)
 
     type ExceptionOr[A] = Either[Throwable, A]
 

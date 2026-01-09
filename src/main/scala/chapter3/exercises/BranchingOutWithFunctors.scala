@@ -2,7 +2,7 @@ package chapter3.exercises
 
 import cats._
 import cats.implicits._
-import helpers.Utils.printThis
+import helpers.printThis
 
 import scala.util.chaining._
 

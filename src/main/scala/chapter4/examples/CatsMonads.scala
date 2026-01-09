@@ -1,10 +1,8 @@
 package chapter4.examples
 
+import implicits._
 import cats._
 import cats.implicits._
-import helpers.Utils._
-
-import scala.util.chaining._
 
 object CatsMonads {
   private def sumSquare[F[_] : Monad](a: F[Int], b: F[Int]): F[Int] =
@@ -15,16 +13,16 @@ object CatsMonads {
 
 
   def apply(): Unit = {
-    sumSquare(1.some, 2.some) pipe printThis()
-    sumSquare(List(1, 2, 3), List(4, 5, 6)) pipe printThis()
-    sumSquare(1: Id[Int], 2: Id[Int]) pipe printThis()
+    sumSquare(1.some, 2.some).tapPrint()
+    sumSquare(List(1, 2, 3), List(4, 5, 6)).tapPrint()
+    sumSquare(1: Id[Int], 2: Id[Int]).tapPrint()
 
     val dave: Id[String] = "Dave"
-    dave.getClass.getSimpleName pipe printThis(Console.YELLOW)
+    dave.getClass.getSimpleName.tapPrint(Console.YELLOW)
 
     for {
       x <- 3: Id[Int]
       y <- 4: Id[Int]
-    } yield (x * y) pipe printThis()
+    } yield (x * y).tapPrint()
   }
 }

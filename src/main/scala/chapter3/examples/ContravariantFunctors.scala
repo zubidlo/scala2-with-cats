@@ -1,6 +1,6 @@
 package chapter3.examples
 
-import helpers.Utils.printThis
+import helpers.printThis
 
 import scala.util.chaining._
 
