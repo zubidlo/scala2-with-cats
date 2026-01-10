@@ -1,69 +1,108 @@
 package chapter4.examples
 
-import helpers.Utils.printThis
-
+import implicits._
 import cats._
-import cats.implicits._
 
-import scala.util.chaining._
+import scala.Console._
 
 object CatsEvalMonad {
   def apply(): Unit = {
-    "Cats Eval Monad" pipe printThis(Console.BLUE)
+    "Cats Eval Monad".tapPrint(BLUE)
 
     // EAGER and MEMOIZED aka call-by-value
     val x = {
-      "Computing X" pipe printThis(Console.YELLOW)
+      "Computing X".tapPrint(YELLOW)
       math.random()
     }
     // x is already evaluated and memoized
-    x tap printThis()
+    x.tapPrint()
     // again returned from memoization
-    x tap printThis()
+    x.tapPrint()
     // Now have same semantics
     val now = Eval.now {
-      "Computing Now" pipe printThis(Console.MAGENTA)
+      "Computing Now".tapPrint(MAGENTA)
       math.random() + 1000
     }
 
     // LAZY and not MEMOIZED aka call-by-name
     def y = {
-      "Computing Y" pipe printThis(Console.YELLOW)
+      "Computing Y".tapPrint(YELLOW)
       math.random()
     }
 
     // y is evaluated every time
-    y pipe printThis()
-    y pipe printThis()
+    y.tapPrint()
+    y.tapPrint()
     // Always have same semantics
     val always = Eval.always {
-      "Computing Always" pipe printThis(Console.MAGENTA)
+      "Computing Always".tapPrint(MAGENTA)
       math.random() + 2000
     }
 
     // LAZY and MEMOIZED aka call-by-need
     lazy val z = {
-      "Computing Z" pipe printThis(Console.YELLOW)
+      "Computing Z".tapPrint(YELLOW)
       math.random()
     }
 
     // evaluated now
-    z pipe printThis()
+    z.tapPrint()
     // same value returned from memoization
-    z pipe printThis()
+    z.tapPrint()
     // Later have same semantics
     val later = Eval.later {
-      "Computing Later" pipe printThis(Console.MAGENTA)
+      "Computing Later".tapPrint(MAGENTA)
       math.random() + 3000
     }
 
-    now.value pipe printThis()
-    now.value pipe printThis()
+    now.value.tapPrint()
+    now.value.tapPrint()
 
-    always.value pipe printThis()
-    always.value pipe printThis()
+    always.value.tapPrint()
+    always.value.tapPrint()
 
-    later.value pipe printThis()
-    later.value pipe printThis()
+    later.value.tapPrint()
+    later.value.tapPrint()
+
+    val greeting = Eval
+      .always { "Step 1".tapPrint(MAGENTA_B); "Hello" }
+      .map { str => "Step 2".tapPrint(MAGENTA_B); s"$str World" }
+
+    greeting.value.tapPrint()
+
+    val ans = for {
+      a <- Eval.now { "Calculating A".tapPrint(MAGENTA_B); 40 }
+      b <- Eval.always { "Calculating B".tapPrint(MAGENTA_B); 2 }
+    } yield {
+      "Adding A and B".tapPrint(MAGENTA_B)
+      a + b
+    }
+
+    "first access".tapPrint(BLUE)
+    ans.value
+    "second access".tapPrint(BLUE)
+    ans.value
+
+    "memoization".tapPrint(BLUE)
+    val saying = Eval
+      .always{ println("Step 1"); "The cat" }
+      .map{ str => println("Step 2"); s"$str sat on" }
+      .memoize
+      .map{ str => println("Step 3"); s"$str the mat" }
+
+    "first access".tapPrint(BLUE)
+    saying.value.tapPrint()
+    "second access".tapPrint(BLUE)
+    saying.value.tapPrint()
+
+    "Trampolining".tapPrint(BLUE)
+
+    def factorial(n: BigInt): Eval[BigInt] =
+      if (n == 1)
+        Eval.now(n)
+      else Eval.defer(factorial(n - 1).map(_ * n))
+
+    "no stack overflow".tapPrint(BLUE)
+    factorial(50000).value
   }
 }

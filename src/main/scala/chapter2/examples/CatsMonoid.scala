@@ -3,7 +3,7 @@ package chapter2.examples
 import cats._
 import cats.implicits._
 
-import scala.util.chaining.scalaUtilChainingOps
+import scala.util.chaining._
 
 object CatsMonoid {
   def apply(): Unit = {

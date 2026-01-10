@@ -1,6 +1,6 @@
-import chapter4.examples.CatsEvalMonad
+import chapter4.examples.CatsWriterMonad
 
 
 class Main extends App {
-  CatsEvalMonad()
+  CatsWriterMonad()
 }

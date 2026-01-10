@@ -6,6 +6,6 @@ import matchers._
 
 class ImplicitsSpec extends AnyFlatSpec with should.Matchers {
 
-  import Implicits._
+  import implicits._
 
 }

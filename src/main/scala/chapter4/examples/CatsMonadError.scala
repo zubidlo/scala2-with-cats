@@ -1,12 +1,11 @@
 package chapter4.examples
 
-import helpers.Utils._
-
 import cats._
 import cats.implicits._
+import helpers.printThis
 
-import scala.util.chaining._
 import scala.util.Try
+import scala.util.chaining._
 
 object CatsMonadError {
   private type ErrorOr[A] = Either[String, A]

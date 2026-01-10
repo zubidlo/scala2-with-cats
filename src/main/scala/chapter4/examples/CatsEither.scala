@@ -1,7 +1,7 @@
 package chapter4.examples
 
 import cats.implicits._
-import helpers.Utils.printThis
+import helpers.printThis
 
 import scala.util.Try
 import scala.util.chaining._
