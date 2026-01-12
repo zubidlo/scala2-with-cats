@@ -1,6 +1,6 @@
-import chapter4.examples.CatsWriterMonad
+import chapter4.examples.CatsReaderMonad
 
 
 class Main extends App {
-  CatsWriterMonad()
+  CatsReaderMonad()
 }
