@@ -1,5 +1,5 @@
 import sbt.Keys.scalacOptions
-
+// project auto reload on source changes
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
 ThisBuild / version := "0.1.0-SNAPSHOT"
